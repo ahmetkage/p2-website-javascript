@@ -3,12 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Homepage</title>
+  <title>Ahmet Enes Portofolio</title>
   <link rel="stylesheet" href="project.css">
+  <style>
+ 
+    #display-area {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    function showContent(contentType) {
+     
+      var display = document.getElementById("display-area");
+
+   
+      var photoContent = "<img src='jouw-foto-url.jpg' alt='Jouw foto'>";
+      var contactContent = "<h3>Contactinformatie</h3><p>Email: mikailezgi25@gmail.com<br>Telefoon: 0615263373</p>";
+      var pitchContent = "<h3>Videopitch</h3><iframe width='560' height='315' src='jouw-video-url' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+      var experienceContent = "<h3>Ervaring / Werkzaamheden</h3><p>...</p>";
+      var educationContent = "<h3>Opleiding</h3><p>..</p>";
+      var skillsContent = "<h3>Programmeer vaardigheden</h3><p>...</p>";
+      var hobbiesContent = "<h3>Hobby's</h3><p>...'s</p>";
+      var extraContent = "<h3>Bijzonderheden</h3><p>..</p>";
+      var traitsContent = "<h3>Karakter eigenschappen</h3><p>...</p>";
+
+      
+      switch(contentType) {
+        case 'photo':
+          display.innerHTML = photoContent;
+          break;
+        case 'contact':
+          display.innerHTML = contactContent;
+          break;
+        case 'pitch':
+          display.innerHTML = pitchContent;
+          break;
+        case 'experience':
+          display.innerHTML = experienceContent;
+          break;
+        case 'education':
+          display.innerHTML = educationContent;
+          break;
+        case 'skills':
+          display.innerHTML = skillsContent;
+          break;
+        case 'hobbies':
+          display.innerHTML = hobbiesContent;
+          break;
+        case 'extra':
+          display.innerHTML = extraContent;
+          break;
+        case 'traits':
+          display.innerHTML = traitsContent;
+          break;
+        default:
+          display.innerHTML = "Selecteer een onderdeel om weer te geven";
+      }
+    }
+  </script>
 </head>
 <body>
   <header>
-    <h1>Project (Portofolio)</h1>
+    <h1>Ahmet Enes Portofolio</h1>
   </header>
 
   <nav>
@@ -25,9 +83,9 @@
       <li>
         <a href="#">Favoriete goede doel</a>
         <ul class="dropdown">
-          <li><a href="#">Mikail</a></li>
+          <li><a href="FavorieteGoedeDoelmikail.html">Mikail</a></li>
           <li><a href="#">Talha</a></li>
-          <li><a href="#">Ahmet Enes</a></li>
+          <li><a href="FavorieteGoedeDoelAhmetEnes.html">Ahmet Enes</a></li>
         </ul>
       </li>
       <li><a href="doneerenspeel.html">Doneer en speel</a></li>
@@ -58,15 +116,32 @@
     </ul>
   </nav>
 
+
+  <nav>
+    <ul>
+      <li><button onclick="showContent('photo')">Foto</button></li>
+      <li><button onclick="showContent('contact')">Contact</button></li>
+      <li><button onclick="showContent('pitch')">Pitch</button></li>
+      <li><button onclick="showContent('experience')">Ervaring</button></li>
+      <li><button onclick="showContent('education')">Opleiding</button></li>
+      <li><button onclick="showContent('skills')">Vaardigheden</button></li>
+      <li><button onclick="showContent('hobbies')">Hobby's</button></li>
+      <li><button onclick="showContent('extra')">Bijzonderheden</button></li>
+      <li><button onclick="showContent('traits')">Eigenschappen</button></li>
+    </ul>
+  </nav>
+
+
+  
   <main>
-    <section>
-      <h2>Over mijzelf</h2>
-      <p>Ik ben Muhammed Ahmet Enes Gorgulu. Ik ben 17 jaar en mijn hobbies zijn gamen en series kijken. Ik vind het maken van apps leuk en interresant. <br> Ik heb voor software develepor gekozen omdat ik het leuk vind om games te maken en daarvoor moet je ook coderen.</p>
+    <section id="display-area">
+      <!-- Hier wordt de inhoud weergegeven -->
+      Selecteer een onderdeel om weer te geven
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2023 Onze Website.</p>
+    <p>&copy; 2023 Jouw Website</p>
   </footer>
 </body>
 </html>
