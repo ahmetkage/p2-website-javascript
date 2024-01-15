@@ -1,14 +1,21 @@
 
 header {
-    background-color: #333;
+    background-color: #d20000;
     color: #fff;
     padding: 20px;
     text-align: center;
   }
   
+  img{
+   padding-right: 1120px;
+   position:absolute;
+   left: 0;
+   right: 0;
+  }
+
   nav ul {
     list-style: none;
-    background-color: #f2f2f2;
+    background-color: #d20000;
     padding: 10px;
   }
   
@@ -19,11 +26,11 @@ header {
   
   nav ul li a {
     text-decoration: none;
-    color: #333;
+    color: #ffffff;
   }
   
   nav ul li a:hover {
-    color: #000;
+    color: #ffffff;
   }
   
   nav ul ul.dropdown {
@@ -40,7 +47,7 @@ header {
   }
   
   footer {
-    background-color: #333;
+    background-color: #d20000;
     color: #fff;
     text-align: center;
     padding: 10px;
