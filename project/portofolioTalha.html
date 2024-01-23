@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Talha Portofolio</title>
+  <title>Mikail Portofolio</title>
   <link rel="stylesheet" href="project.css">
   <style>
  
@@ -19,14 +19,19 @@
       var display = document.getElementById("display-area");
 
    
-      var photoContent = "<img src='jouw-foto-url.jpg' alt='Jouw foto'>";
-      var contactContent = "<h3>Contactinformatie</h3><p>Email: mikailezgi25@gmail.com<br>Telefoon: 0615263373</p>";
+      var photoContent = "<img src='C:/Users/mikai/Desktop/p2-website-javascript-2/project/WhatsApp Image 2024-01-22 at 13.31.58.jpeg' alt='Jouw foto'>";
+
+      var contactContent = "<h3>Contactinformatie</h3><p>Email: seriftalhakucuker@hotmail.com <br>Telefoon: 0685562405</p>";
       var pitchContent = "<h3>Videopitch</h3><iframe width='560' height='315' src='jouw-video-url' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
-      var experienceContent = "<h3>Ervaring / Werkzaamheden</h3><p>...</p>";
-      var educationContent = "<h3>Opleiding</h3><p>..</p>";
-     
-      var hobbiesContent = "<h3>Hobby's</h3><p>...'s</p>";
-      
+      var educationContent = "<h3>Opleiding</h3><p>Vorig jaar heb ik mijn mavo-diploma behaald aan Portus Juliana. Momenteel volg ik een mbo-opleiding tot softwareontwikkelaar aan het Techniek College.</p>";
+      var skillsContent = "<h3>Programmeer vaardigheden</h3><p> Ik bezit kennis van CSS, HTML, PHP, JavaScript en SQL. Mijn passie ligt in voortdurend leren, vooral op het gebied van programmeren, met een specifieke focus op webontwikkeling. Mijn doel is om mijn vaardigheden te verbeteren en eenvoudige oplossingen te creëren.</p>";
+      var hobbiesContent = "<h3>Hobby's</h3><p>Ik heb een diepe passie voor zowel het actief deelnemen aan en het kijken naar voetbal en het spelen van games.'s</p>";
+
+
+
+
+
+
 
       
       switch(contentType) {
@@ -38,9 +43,7 @@
           break;
         case 'pitch':
           display.innerHTML = pitchContent;
-          break;
-        case 'experience':
-          display.innerHTML = experienceContent;
+
           break;
         case 'education':
           display.innerHTML = educationContent;
@@ -52,11 +55,7 @@
           display.innerHTML = hobbiesContent;
           break;
         case 'extra':
-          display.innerHTML = extraContent;
-          break;
-        case 'traits':
-          display.innerHTML = traitsContent;
-          break;
+
         default:
           display.innerHTML = "Selecteer een onderdeel om weer te geven";
       }
@@ -65,7 +64,7 @@
 </head>
 <body>
   <header>
-    <h1>Talha Portofolio</h1>
+    <h1>Mikail Portofolio</h1>
     <img src="C:\Users\mikai\Desktop\p2-website-javascript-2\img/osmanli-armasi-5-removebg-preview.png" alt="" width="240" height="120">
   </header>
 
@@ -92,9 +91,9 @@
       <li>
         <a href="#">Uitleg goede doelen</a>
         <ul class="dropdown">
-          <li><a href="uitleggoededoelmikail.html"> Goede doel Mikail</a></li>
-          <li><a href="uitleggoededoelmikail.html">Goede doel Talha</a></li>
-          <li><a href="uitleggoededoelahmetenes.html">Goede doel Ahmet Enes</a></li>
+          <li><a href="#"> Goede doel Mikail</a></li>
+          <li><a href="#">Goede doel Talha</a></li>
+          <li><a href="#">Goede doel Ahmet Enes</a></li>
         </ul>
       </li>
       <li>
@@ -115,17 +114,15 @@
       </li>
     </ul>
   </nav>
-
-
-
-  <nav>
+  
+   <nav>
     <ul>
       <li><button onclick="showContent('photo')">Foto</button></li>
       <li><button onclick="showContent('contact')">Contact</button></li>
       <li><button onclick="showContent('pitch')">Pitch</button></li>
-      <li><button onclick="showContent('experience')">Ervaring</button></li>
+
       <li><button onclick="showContent('education')">Opleiding</button></li>
-     
+      <li><button onclick="showContent('skills')">Vaardigheden</button></li>
       <li><button onclick="showContent('hobbies')">Hobby's</button></li>
 
     </ul>
