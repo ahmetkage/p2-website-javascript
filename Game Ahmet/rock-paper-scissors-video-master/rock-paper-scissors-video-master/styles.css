@@ -316,23 +316,6 @@ body {
   pointer-events: initial;
 }
 
-/* Footer */
-.footer {
-  position: absolute;
-  bottom: 2rem;
-  width: 100%;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.attribution {
-  font-size: 12px;
-  text-align: center;
-}
-.attribution a {
-  color: #ff652f;
-}
-
 /* Utilities */
 .preload * {
   transition: none;
@@ -340,4 +323,8 @@ body {
 
 .hidden {
   display: none;
+}
+
+img{
+  size: 50px;
 }
