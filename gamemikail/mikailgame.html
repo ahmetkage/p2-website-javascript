@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Pagina-informatie, titel en tekenset -->
     <title>Cross The Road</title>
     <meta charset="UTF-8" />
+    <!-- Responsive viewport-instellingen -->
     <meta name="viewport" content="width=device-width" />
+    <!-- Koppel de CSS-stijlen aan het document -->
     <link rel="stylesheet" href="mikailgame.css" />
   </head>
   <body>
+    <!-- Container voor het scorebord -->
     <div id="counter">0</div>
 
-<div id="controlls">
-  <div>
-    <button id="forward">
-      <svg width="30" height="30" viewBox="0 0 10 10">
-        <g transform="rotate(0, 5,5)">
-          <path d="M5,4 L7,6 L3,6 L5,4" />
-        </g>
-      </svg>
-    </button>
-    <button id="left">
-      <svg width="30" height="30" viewBox="0 0 10 10">
-        <g transform="rotate(-90, 5,5)">
-          <path d="M5,4 L7,6 L3,6 L5,4" />
-        </g>
-      </svg>
-    </button>
-    <button id="backward">
-      <svg width="30" height="30" viewBox="0 0 10 10">
-        <g transform="rotate(180, 5,5)">
-          <path d="M5,4 L7,6 L3,6 L5,4" />
-        </g>
-      </svg>
-    </button>
-    <button id="right">
-      <svg width="30" height="30" viewBox="0 0 10 10">
-        <g transform="rotate(90, 5,5)">
-          <path d="M5,4 L7,6 L3,6 L5,4" />
-        </g>
-      </svg>
-    </button>
-  </div>
-</div>
+    <!-- Bedieningselementen voor het spel -->
+    <div id="controlls">
+      <div>
+        <!-- Knoppen voor vooruit, links, achteruit en rechts -->
+        <button id="forward">
+          <!-- SVG-afbeelding voor de vooruitknop -->
+          <svg width="30" height="30" viewBox="0 0 10 10">
+            <g transform="rotate(0, 5,5)">
+              <path d="M5,4 L7,6 L3,6 L5,4" />
+            </g>
+          </svg>
+        </button>
+        <button id="left">
+          <!-- SVG-afbeelding voor de linkerknop -->
+          <svg width="30" height="30" viewBox="0 0 10 10">
+            <g transform="rotate(-90, 5,5)">
+              <path d="M5,4 L7,6 L3,6 L5,4" />
+            </g>
+          </svg>
+        </button>
+        <button id="backward">
+          <!-- SVG-afbeelding voor de achteruitknop -->
+          <svg width="30" height="30" viewBox="0 0 10 10">
+            <g transform="rotate(180, 5,5)">
+              <path d="M5,4 L7,6 L3,6 L5,4" />
+            </g>
+          </svg>
+        </button>
+        <button id="right">
+          <!-- SVG-afbeelding voor de rechterknop -->
+          <svg width="30" height="30" viewBox="0 0 10 10">
+            <g transform="rotate(90, 5,5)">
+              <path d="M5,4 L7,6 L3,6 L5,4" />
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
 
-<div id="end">
-  <button id="retry">Retry</button>
-</div>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js'></script>
+    <!-- Container voor het eindspelscherm -->
+    <div id="end">
+      <!-- Knop om het spel opnieuw te proberen -->
+      <button id="retry">Retry</button>
+    </div>
+
+    <!-- Laad de Three.js-bibliotheek -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js'></script>
+    <!-- Laad de JavaScript-code voor het spel -->
     <script src="mikailgame.js"></script>
   </body>
 </html>

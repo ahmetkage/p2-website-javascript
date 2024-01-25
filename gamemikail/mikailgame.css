@@ -1,22 +1,30 @@
+/* Importeer het Press Start 2P-lettertype van Google Fonts */
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 
+/* Basisstijlen voor de body van de pagina */
 body {
   margin: 0;
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Press Start 2P', cursive; /* Gebruik het Press Start 2P-lettertype */
   font-size: 2em;
-  color: white;
+  color: white; /* Witte tekstkleur */
 }
+
+/* Basisstijlen voor alle knoppen op de pagina */
 button {
-  outline: none;
-  cursor: pointer;
-  border: none;
-  box-shadow: 3px 5px 0px 0px rgba(0,0,0,0.75);
+  outline: none; /* Verwijder de standaard focusoutline */
+  cursor: pointer; /* Wijzig de cursor naar een pointer bij zweven */
+  border: none; /* Verwijder standaard randen van knoppen */
+  box-shadow: 3px 5px 0px 0px rgba(0,0,0,0.75); /* Voeg een lichte schaduw toe aan knoppen */
 }
+
+/* Stijlen voor het weergeven van de huidige positie van de kip */
 #counter {
   position: absolute;
   top: 20px;
   right: 20px;
 }
+
+/* Stijlen voor het weergeven van het eindscherm */
 #end {
   position: absolute;
   min-width: 100%;
@@ -24,14 +32,18 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  visibility: hidden;
+  visibility: hidden; /* Standaard onzichtbaar */
 }
+
+/* Stijlen voor de knop binnen het eindscherm */
 #end button {
   background-color: red;
   padding: 20px 50px 20px 50px;
-  font-family: inherit;
-  font-size: inherit;
+  font-family: inherit; /* Gebruik het standaard lettertype van de ouder */
+  font-size: inherit; /* Gebruik de standaard lettergrootte van de ouder */
 }
+
+/* Stijlen voor het bedieningspaneel */
 #controlls {
   position: absolute;
   min-width: 100%;
@@ -40,6 +52,8 @@ button {
   align-items: flex-end;
   justify-content: center;
 }
+
+/* Stijlen voor de individuele knoppen in het bedieningspaneel */
 #controlls div {
   display: grid;
   grid-template-columns: 50px 50px 50px;
@@ -48,11 +62,15 @@ button {
   grid-row-gap: 10px;
   margin-bottom: 20px;
 }
+
+/* Stijlen voor alle knoppen in het bedieningspaneel */
 #controlls button {
   width: 100%;
   background-color: white;
   border: 1px solid lightgray;
 }
+
+/* Specifieke stijlen voor de eerste knop in het bedieningspaneel */
 #controlls button:first-of-type {
-  grid-column: 1/-1;
+  grid-column: 1/-1; /* Breedte van alle kolommen */
 }
