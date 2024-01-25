@@ -5,8 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Homepage</title>
   <link rel="stylesheet" href="project.css">
+  <script>
+    function donateToPlay() {
+      // Hier kun je de gewenste logica toevoegen om het ingevoerde getal te verwerken
+      var userInput = prompt("Voer een getal in om te doneren en te spelen:");
+
+      // Controleer of de gebruiker iets heeft ingevoerd en het geen lege waarde is
+      if (userInput !== null && userInput.trim() !== "") {
+        // Hier kun je de gewenste logica toevoegen voor het verwerken van het ingevoerde getal
+
+        // Voor nu sturen we de gebruiker gewoon naar een andere pagina
+        window.location.href = "game.html";
+      } else {
+        // Gebruiker heeft geannuleerd of niets ingevoerd
+        alert("Donatie geannuleerd of geen geldige invoer.");
+      }
+    }
+  </script>
 </head>
 <body>
+  <!-- ... (bestaande code) -->
+
+
+
   <header>
     <h1>Project (Home)</h1>
     <img src="C:\Users\mikai\Desktop\p2-website-javascript-2\img/osmanli-armasi-5-removebg-preview.png" alt="" width="240" height="120">
@@ -31,7 +52,6 @@
           <li><a href="FavorieteGoedeDoelAhmetEnes.html">Ahmet Enes</a></li>
         </ul>
       </li>
-      <li><a href="doneerenspeel.html">Doneer en speel</a></li>
       <li>
         <a href="#">Uitleg goede doelen</a>
         <ul class="dropdown">
@@ -40,22 +60,8 @@
           <li><a href="uitleggoededoelahmetenes.html">Goede doel Ahmet Enes</a></li>
         </ul>
       </li>
-      <li>
-        <a href="#">Games</a>
-        <ul class="dropdown">
-          <li><a href="gamemikail.html">Game Mikail</a></li>
-          <li><a href="#">Game Talha</a></li>
-          <li><a href="#">Game Ahmet Enes</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">uitleg over games</a>
-        <ul class="dropdown">
-          <li><a href="#">Game Mikail</a></li>
-          <li><a href="#">Game Talha</a></li>
-          <li><a href="#">Game Ahmet Enes</a></li>
-        </ul>
-      </li>
+      <li><a href="game.html">Onze Games</a></li>
+      <li><a href="uitleggames.html">Uitleg Games</a></li>
     </ul>
   </nav>
 
@@ -63,6 +69,7 @@
   <main>
     <section>
       <h2>Welkom op onze website!</h2>
+      <button onclick="donateToPlay()">Donate to Play</button>
     </section>
   </main>
 
