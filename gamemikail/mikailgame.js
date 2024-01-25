@@ -1,69 +1,77 @@
-const counterDOM = document.getElementById('counter');
-const endDOM = document.getElementById('end');
+// Haal DOM-elementen op
+const counterDOM = document.getElementById('counter'); // Referentie naar het HTML-element met id 'counter'
+const endDOM = document.getElementById('end'); // Referentie naar het HTML-element met id 'end'
 
-const scene = new THREE.Scene();
+// Initialisatie van de 3D-scene en camera
+const scene = new THREE.Scene(); // Maak een nieuwe THREE.js-scene
 
+// Instellingen voor de orthografische camera
 const distance = 500;
-const camera = new THREE.OrthographicCamera( window.innerWidth/-2, window.innerWidth/2, window.innerHeight / 2, window.innerHeight / -2, 0.1, 10000 );
+const camera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, 0.1, 10000);
+// Aanpassingen aan de camerapositie en rotatie
+camera.rotation.x = 50 * Math.PI / 180;
+camera.rotation.y = 20 * Math.PI / 180;
+camera.rotation.z = 10 * Math.PI / 180;
 
-camera.rotation.x = 50*Math.PI/180;
-camera.rotation.y = 20*Math.PI/180;
-camera.rotation.z = 10*Math.PI/180;
-
-const initialCameraPositionY = -Math.tan(camera.rotation.x)*distance;
-const initialCameraPositionX = Math.tan(camera.rotation.y)*Math.sqrt(distance**2 + initialCameraPositionY**2);
+// Berekeningen voor de initiële camerapositie
+const initialCameraPositionY = -Math.tan(camera.rotation.x) * distance;
+const initialCameraPositionX = Math.tan(camera.rotation.y) * Math.sqrt(distance ** 2 + initialCameraPositionY ** 2);
 camera.position.y = initialCameraPositionY;
 camera.position.x = initialCameraPositionX;
 camera.position.z = distance;
 
-const zoom = 2;
+// Initialisatie van andere variabelen
+const zoom = 2; // Schaal voor zoomen
+const chickenSize = 15; // Grootte van de kip
+const positionWidth = 42; // Breedte van een positie op de baan
+const columns = 17; // Aantal kolommen op de baan
+const boardWidth = positionWidth * columns; // Totale breedte van de baan
 
-const chickenSize = 15;
+const stepTime = 200; // Tijd (in milliseconden) die nodig is voor een stap naar voren, naar achteren, links of rechts
 
-const positionWidth = 42;
-const columns = 17;
-const boardWidth = positionWidth*columns;
-
-const stepTime = 200; // Miliseconds it takes for the chicken to take a step forward, backward, left or right
-
+// Variabelen voor baan- en bewegingslogica
 let lanes;
 let currentLane;
 let currentColumn;
-
 let previousTimestamp;
 let startMoving;
 let moves;
 let stepStartTimestamp;
 
-const carFrontTexture = new Texture(40,80,[{x: 0, y: 10, w: 30, h: 60 }]);
-const carBackTexture = new Texture(40,80,[{x: 10, y: 10, w: 30, h: 60 }]);
-const carRightSideTexture = new Texture(110,40,[{x: 10, y: 0, w: 50, h: 30 }, {x: 70, y: 0, w: 30, h: 30 }]);
-const carLeftSideTexture = new Texture(110,40,[{x: 10, y: 10, w: 50, h: 30 }, {x: 70, y: 10, w: 30, h: 30 }]);
+// Texturen voor voertuigen
+const carFrontTexture = new Texture(40, 80, [{ x: 0, y: 10, w: 30, h: 60 }]);
+const carBackTexture = new Texture(40, 80, [{ x: 10, y: 10, w: 30, h: 60 }]);
+const carRightSideTexture = new Texture(110, 40, [{ x: 10, y: 0, w: 50, h: 30 }, { x: 70, y: 0, w: 30, h: 30 }]);
+const carLeftSideTexture = new Texture(110, 40, [{ x: 10, y: 10, w: 50, h: 30 }, { x: 70, y: 10, w: 30, h: 30 }]);
 
-const truckFrontTexture = new Texture(30,30,[{x: 15, y: 0, w: 10, h: 30 }]);
-const truckRightSideTexture = new Texture(25,30,[{x: 0, y: 15, w: 10, h: 10 }]);
-const truckLeftSideTexture = new Texture(25,30,[{x: 0, y: 5, w: 10, h: 10 }]);
+const truckFrontTexture = new Texture(30, 30, [{ x: 15, y: 0, w: 10, h: 30 }]);
+const truckRightSideTexture = new Texture(25, 30, [{ x: 0, y: 15, w: 10, h: 10 }]);
+const truckLeftSideTexture = new Texture(25, 30, [{ x: 0, y: 5, w: 10, h: 10 }]);
 
-const generateLanes = () => [-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9].map((index) => {
+// Functie om rijstroken te genereren
+const generateLanes = () => [-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
   const lane = new Lane(index);
-  lane.mesh.position.y = index*positionWidth*zoom;
-  scene.add( lane.mesh );
+  lane.mesh.position.y = index * positionWidth * zoom;
+  scene.add(lane.mesh);
   return lane;
 }).filter((lane) => lane.index >= 0);
 
+// Functie om een nieuwe rijstrook toe te voegen
 const addLane = () => {
   const index = lanes.length;
   const lane = new Lane(index);
-  lane.mesh.position.y = index*positionWidth*zoom;
+  lane.mesh.position.y = index * positionWidth * zoom;
   scene.add(lane.mesh);
   lanes.push(lane);
 }
 
+// Maak een kip en voeg deze toe aan de scene
 const chicken = new Chicken();
-scene.add( chicken );
+scene.add(chicken);
 
+// Initiële lichtinstellingen
 hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
-scene.add(hemiLight)
+scene.add(hemiLight);
 
 const initialDirLightPositionX = -100;
 const initialDirLightPositionY = -100;
@@ -73,33 +81,33 @@ dirLight.castShadow = true;
 dirLight.target = chicken;
 scene.add(dirLight);
 
+// Instellingen voor de schaduwmap van de directionele lichtbron
 dirLight.shadow.mapSize.width = 2048;
 dirLight.shadow.mapSize.height = 2048;
 var d = 500;
-dirLight.shadow.camera.left = - d;
+dirLight.shadow.camera.left = -d;
 dirLight.shadow.camera.right = d;
 dirLight.shadow.camera.top = d;
-dirLight.shadow.camera.bottom = - d;
+dirLight.shadow.camera.bottom = -d;
 
-// var helper = new THREE.CameraHelper( dirLight.shadow.camera );
-// var helper = new THREE.CameraHelper( camera );
-// scene.add(helper)
-
+// Achterlicht voor extra verlichting
 backLight = new THREE.DirectionalLight(0x000000, .4);
 backLight.position.set(200, 200, 50);
 backLight.castShadow = true;
-scene.add(backLight)
+scene.add(backLight);
 
+// Arrays voor voertuigtypen, snelheden en kleuren
 const laneTypes = ['car', 'truck', 'forest'];
 const laneSpeeds = [2, 2.5, 3];
-const vechicleColors = [0xa52523, 0xbdb638, 0x78b14b];
-const threeHeights = [20,45,60];
+const vehicleColors = [0xa52523, 0xbdb638, 0x78b14b];
+const treeHeights = [20, 45, 60];
 
-const initaliseValues = () => {
+// Functie om variabelen te initialiseren
+const initializeValues = () => {
   lanes = generateLanes()
 
   currentLane = 0;
-  currentColumn = Math.floor(columns/2);
+  currentColumn = Math.floor(columns / 2);
 
   previousTimestamp = null;
 
@@ -117,24 +125,27 @@ const initaliseValues = () => {
   dirLight.position.y = initialDirLightPositionY;
 }
 
-initaliseValues();
+// Roep de initialisatiefunctie aan
+initializeValues();
 
+// Maak een renderer en voeg deze toe aan het HTML-document
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true
 });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
+// Constructorfunctie voor het maken van texturen voor voertuigen
 function Texture(width, height, rects) {
-  const canvas = document.createElement( "canvas" );
+  const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const context = canvas.getContext( "2d" );
+  const context = canvas.getContext("2d");
   context.fillStyle = "#ffffff";
-  context.fillRect( 0, 0, width, height );
+  context.fillRect(0, 0, width, height);
   context.fillStyle = "rgba(0,0,0,0.6)";
   rects.forEach(rect => {
     context.fillRect(rect.x, rect.y, rect.w, rect.h);
@@ -142,52 +153,54 @@ function Texture(width, height, rects) {
   return new THREE.CanvasTexture(canvas);
 }
 
+// Constructorfunctie voor het maken van een wiel
 function Wheel() {
   const wheel = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 12*zoom, 33*zoom, 12*zoom ),
-    new THREE.MeshLambertMaterial( { color: 0x333333, flatShading: true } )
+    new THREE.BoxBufferGeometry(12 * zoom, 33 * zoom, 12 * zoom),
+    new THREE.MeshLambertMaterial({ color: 0x333333, flatShading: true })
   );
-  wheel.position.z = 6*zoom;
+  wheel.position.z = 6 * zoom;
   return wheel;
 }
 
+// Constructorfunctie voor het maken van een auto
 function Car() {
   const car = new THREE.Group();
-  const color = vechicleColors[Math.floor(Math.random() * vechicleColors.length)];
+  const color = vehicleColors[Math.floor(Math.random() * vehicleColors.length)];
 
   const main = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 60*zoom, 30*zoom, 15*zoom ),
-    new THREE.MeshPhongMaterial( { color, flatShading: true } )
+    new THREE.BoxBufferGeometry(60 * zoom, 30 * zoom, 15 * zoom),
+    new THREE.MeshPhongMaterial({ color, flatShading: true })
   );
-  main.position.z = 12*zoom;
+  main.position.z = 12 * zoom;
   main.castShadow = true;
   main.receiveShadow = true;
   car.add(main)
 
   const cabin = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 33*zoom, 24*zoom, 12*zoom ),
+    new THREE.BoxBufferGeometry(33 * zoom, 24 * zoom, 12 * zoom),
     [
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carBackTexture } ),
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carFrontTexture } ),
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carRightSideTexture } ),
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carLeftSideTexture } ),
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true } ), // top
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true } ) // bottom
+      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true, map: carBackTexture }),
+      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true, map: carFrontTexture }),
+      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true, map: carRightSideTexture }),
+      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true, map: carLeftSideTexture }),
+      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true }), // top
+      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true }) // bottom
     ]
   );
-  cabin.position.x = 6*zoom;
-  cabin.position.z = 25.5*zoom;
+  cabin.position.x = 6 * zoom;
+  cabin.position.z = 25.5 * zoom;
   cabin.castShadow = true;
   cabin.receiveShadow = true;
-  car.add( cabin );
+  car.add(cabin);
 
   const frontWheel = new Wheel();
-  frontWheel.position.x = -18*zoom;
-  car.add( frontWheel );
+  frontWheel.position.x = -18 * zoom;
+  car.add(frontWheel);
 
   const backWheel = new Wheel();
-  backWheel.position.x = 18*zoom;
-  car.add( backWheel );
+  backWheel.position.x = 18 * zoom;
+  car.add(backWheel);
 
   car.castShadow = true;
   car.receiveShadow = false;
@@ -195,79 +208,80 @@ function Car() {
   return car;
 }
 
+// Constructorfunctie voor het maken van een vrachtwagen
 function Truck() {
   const truck = new THREE.Group();
-  const color = vechicleColors[Math.floor(Math.random() * vechicleColors.length)];
-
+  const color = vehicleColors[Math.floor(Math.random() * vehicleColors.length)];
 
   const base = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 100*zoom, 25*zoom, 5*zoom ),
-    new THREE.MeshLambertMaterial( { color: 0xb4c6fc, flatShading: true } )
+    new THREE.BoxBufferGeometry(100 * zoom, 25 * zoom, 5 * zoom),
+    new THREE.MeshLambertMaterial({ color: 0xb4c6fc, flatShading: true })
   );
-  base.position.z = 10*zoom;
+  base.position.z = 10 * zoom;
   truck.add(base)
 
   const cargo = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 75*zoom, 35*zoom, 40*zoom ),
-    new THREE.MeshPhongMaterial( { color: 0xb4c6fc, flatShading: true } )
+    new THREE.BoxBufferGeometry(75 * zoom, 35 * zoom, 40 * zoom),
+    new THREE.MeshPhongMaterial({ color: 0xb4c6fc, flatShading: true })
   );
-  cargo.position.x = 15*zoom;
-  cargo.position.z = 30*zoom;
+  cargo.position.x = 15 * zoom;
+  cargo.position.z = 30 * zoom;
   cargo.castShadow = true;
   cargo.receiveShadow = true;
   truck.add(cargo)
 
   const cabin = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 25*zoom, 30*zoom, 30*zoom ),
+    new THREE.BoxBufferGeometry(25 * zoom, 30 * zoom, 30 * zoom),
     [
-      new THREE.MeshPhongMaterial( { color, flatShading: true } ), // back
-      new THREE.MeshPhongMaterial( { color, flatShading: true, map: truckFrontTexture } ),
-      new THREE.MeshPhongMaterial( { color, flatShading: true, map: truckRightSideTexture } ),
-      new THREE.MeshPhongMaterial( { color, flatShading: true, map: truckLeftSideTexture } ),
-      new THREE.MeshPhongMaterial( { color, flatShading: true } ), // top
-      new THREE.MeshPhongMaterial( { color, flatShading: true } ) // bottom
+      new THREE.MeshPhongMaterial({ color, flatShading: true }), // back
+      new THREE.MeshPhongMaterial({ color, flatShading: true, map: truckFrontTexture }),
+      new THREE.MeshPhongMaterial({ color, flatShading: true, map: truckRightSideTexture }),
+      new THREE.MeshPhongMaterial({ color, flatShading: true, map: truckLeftSideTexture }),
+      new THREE.MeshPhongMaterial({ color, flatShading: true }), // top
+      new THREE.MeshPhongMaterial({ color, flatShading: true }) // bottom
     ]
   );
-  cabin.position.x = -40*zoom;
-  cabin.position.z = 20*zoom;
+  cabin.position.x = -40 * zoom;
+  cabin.position.z = 20 * zoom;
   cabin.castShadow = true;
   cabin.receiveShadow = true;
-  truck.add( cabin );
+  truck.add(cabin);
 
   const frontWheel = new Wheel();
-  frontWheel.position.x = -38*zoom;
-  truck.add( frontWheel );
+  frontWheel.position.x = -38 * zoom;
+  truck.add(frontWheel);
 
   const middleWheel = new Wheel();
-  middleWheel.position.x = -10*zoom;
-  truck.add( middleWheel );
+  middleWheel.position.x = -10 * zoom;
+  truck.add(middleWheel);
 
   const backWheel = new Wheel();
-  backWheel.position.x = 30*zoom;
-  truck.add( backWheel );
+  backWheel.position.x = 30 * zoom;
+  truck.add(backWheel);
 
   return truck;
 }
 
+// Constructorfunctie voor het maken van een boom
 function Three() {
   const three = new THREE.Group();
 
   const trunk = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 15*zoom, 15*zoom, 20*zoom ),
-    new THREE.MeshPhongMaterial( { color: 0x4d2926, flatShading: true } )
+    new THREE.BoxBufferGeometry(15 * zoom, 15 * zoom, 20 * zoom),
+    new THREE.MeshPhongMaterial({ color: 0x4d2926, flatShading: true })
   );
-  trunk.position.z = 10*zoom;
+  trunk.position.z = 10 * zoom;
   trunk.castShadow = true;
   trunk.receiveShadow = true;
   three.add(trunk);
 
-  height = threeHeights[Math.floor(Math.random()*threeHeights.length)];
+  const height = treeHeights[Math.floor(Math.random() * treeHeights.length)];
 
   const crown = new THREE.Mesh(
-    new THREE.BoxBufferGeometry( 30*zoom, 30*zoom, height*zoom ),
-    new THREE.MeshLambertMaterial( { color: 0x7aa21d, flatShading: true } )
+    new THREE.BoxBufferGeometry(30 * zoom, 30 * zoom, height * zoom),
+    new THREE.MeshLambertMaterial({ color: 0x7aa21d, flatShading: true })
   );
-  crown.position.z = (height/2+20)*zoom;
+  crown.position.z = (height / 2 + 20) * zoom;
   crown.castShadow = true;
   crown.receiveShadow = false;
   three.add(crown);
@@ -275,8 +289,10 @@ function Three() {
   return three;
 }
 
+// Constructorfunctie voor het maken van een kip
 function Chicken() {
   const chicken = new THREE.Group();
+
 
   const body = new THREE.Mesh(
     new THREE.BoxBufferGeometry( chickenSize*zoom, chickenSize*zoom, 20*zoom ),
@@ -418,12 +434,13 @@ function Lane(index) {
   }
 }
 
+// Event listener voor retry knop
 document.querySelector("#retry").addEventListener("click", () => {
   lanes.forEach(lane => scene.remove( lane.mesh ));
   initaliseValues();
   endDOM.style.visibility = 'hidden';
 });
-
+// Event listeners voor bewegingen en toetsen
 document.getElementById('forward').addEventListener("click", () => move('forward'));
 
 document.getElementById('backward').addEventListener("click", () => move('backward'));
@@ -594,5 +611,5 @@ function animate(timestamp) {
   }
   renderer.render( scene, camera );
 }
-
+// Start de animatie
 requestAnimationFrame( animate );
