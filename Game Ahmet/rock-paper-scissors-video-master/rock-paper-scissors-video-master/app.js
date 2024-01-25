@@ -76,15 +76,15 @@ function displayWinner(results) {
     const aiWins = isWinner(results.reverse());
 
     if (userWins) {
-      resultText.innerText = "you win";
-      resultDivs[0].classList.toggle("winner");
+      resultText.innerText = "Winnaar";
+      resultDivs[0].classList.toggle("Winnaar");
       keepScore(1);
     } else if (aiWins) {
-      resultText.innerText = "you lose";
-      resultDivs[1].classList.toggle("winner");
+      resultText.innerText = "Verloren";
+      resultDivs[1].classList.toggle("winnaar");
       keepScore(-1);
     } else {
-      resultText.innerText = "draw";
+      resultText.innerText = "Gelijl";
     }
     resultWinner.classList.toggle("hidden");
     resultsDiv.classList.toggle("show-winner");
