@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bankrekening Simulator</title>
+    <link rel="stylesheet" href="opdjs.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bankrekening Simulator</h1>
+        <label for="selectUser">Selecteer Gebruiker:</label>
+        <select id="selectUser">
+            <option value="1">Gebruiker 1</option>
+            <option value="2">Gebruiker 2</option>
+            <option value="3">Gebruiker 3</option>
+        </select>
+        <p id="saldo">Huidig saldo: <span id="saldoGebruiker">600</span> Euro</p>
+        <button id="storten">Storten</button>
+        <input type="number" id="stortenBedrag" placeholder="Bedrag">
+        <button id="opnemen">Opnemen</button>
+        <input type="number" id="opnemenBedrag" placeholder="Bedrag">
+        <h2>Transactiegeschiedenis</h2>
+        <ul id="transacties"></ul>
+    </div>
+    <script src="opdjs.js"></script>
+</body>
+</html>
