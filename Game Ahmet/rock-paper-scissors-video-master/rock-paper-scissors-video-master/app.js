@@ -1,4 +1,4 @@
-// Prevent animation on load
+// Vermeid animatie laad
 setTimeout(() => {
   document.body.classList.remove("preload");
 }, 500);
@@ -35,7 +35,7 @@ const playAgainBtn = document.querySelector(".play-again");
 const scoreNumber = document.querySelector(".score__number");
 let score = 0;
 
-// Game Logic
+// Game logica
 choiceButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const choiceName = button.dataset.choice;
@@ -100,7 +100,7 @@ function keepScore(point) {
   scoreNumber.innerText = score;
 }
 
-// Play Again
+// Speel opnieuw
 playAgainBtn.addEventListener("click", () => {
   gameDiv.classList.toggle("hidden");
   resultsDiv.classList.toggle("hidden");
@@ -115,7 +115,7 @@ playAgainBtn.addEventListener("click", () => {
   resultsDiv.classList.toggle("show-winner");
 });
 
-// Show/Hide Rules
+// Zien/Verberg Regels
 btnRules.addEventListener("click", () => {
   modalRules.classList.toggle("show-modal");
 });
